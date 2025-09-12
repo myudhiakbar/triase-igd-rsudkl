@@ -3,70 +3,183 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous" defer></script>
-  <title>Kotak Saran</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" defer></script>
+  <title>FORM TRIASE RSKL</title>
+  <style>
+    body {
+      background: linear-gradient(135deg, #ece9e6, #ffffff);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .form-card {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      padding: 30px;
+      max-width: 500px;
+      width: 100%;
+      text-align: center;
+    }
+
+    h1 {
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 25px;
+      min-height: 40px; /* biar ga lompat saat animasi */
+    }
+
+    .btn-primary {
+      background: #4e73df;
+      border: none;
+      transition: all 0.3s ease;
+    }
+
+    .btn-primary:hover {
+      background: #2e59d9;
+      transform: translateY(-2px);
+    }
+
+    #message {
+      margin-top: 15px;
+      display: none;
+      font-weight: 500;
+      animation: fadeIn 0.6s ease-in-out;
+    }
+
+    .alert-success {
+      background: #e9f7ef;
+      color: #1e7e34;
+      border: 1px solid #c3e6cb;
+    }
+
+    .alert-danger {
+      background: #fcebea;
+      color: #842029;
+      border: 1px solid #f5c2c7;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
 </head>
+
 <body>
-  <h1 class="text-center py-4">Form Triase RSUD Kebayoran Lama</h1>
-  <form method="POST" action="https://script.google.com/macros/s/AKfycbzjNrMnENmyOV_YQJi1ID-RJD-X_7pz9TfWcoSrBfhGsKNBdT5WrnZYySklCMG94box5g/exec" class="container">
-    <div class="mb-3">
-      <label for="name" class="form-label">Nama Pasien</label>
-      <input type="text" class="form-control" id="name">
+  <div class="form-card">
+    <h1 id="typingText"></h1>
+    
+    <form id="dataIGD">
+      <div class="mb-3 text-start">
+        <label for="nama_pasien" class="form-label">Nama Pasien</label>
+        <input type="text" class="form-control" id="nama_pasien" name="nama_pasien">
+      </div>
+
+      <div class="mb-3 text-start">
+        <label for="keluhan" class="form-label">Keluhan <span class="text-danger">*</span></label>
+        <textarea class="form-control" id="keluhan" name="keluhan" rows="3" required></textarea>
+      </div>
+
+      <div class="mb-3 text-start">
+        <label for="tekanan_darah" class="form-label">Tekanan Darah</label>
+        <input type="text" class="form-control" id="tekanan_darah" name="tekanan_darah">
+      </div>
+
+      <div class="mb-3 text-start">
+        <label for="nadi" class="form-label">Nadi <span class="text-danger">*</span></label>
+        <input type="number" class="form-control" id="nadi" name="nadi" required>
+      </div>
+
+      <div class="mb-3 text-start">
+        <label for="suhu" class="form-label">Suhu <span class="text-danger">*</span></label>
+        <input type="number" class="form-control" id="suhu" name="suhu" required>
+      </div>
+
+      <div class="mb-3 text-start">
+        <label for="pernapasan" class="form-label">Pernapasan <span class="text-danger">*</span></label>
+        <input type="number" class="form-control" id="pernapasan" name="pernapasan" required>
+      </div>
+
+      <div class="mb-3 text-start">
+        <label for="saturasi_oksigen" class="form-label">Saturasi Oksigen <span class="text-danger">*</span></label>
+        <input type="number" class="form-control" id="saturasi_oksigen" name="saturasi_oksigen" required>
+      </div>
+
+      <div class="mb-3 text-start">
+        <label for="riwayat_penggunaan_obat" class="form-label">Riwayat Penggunaan Obat</label>
+        <textarea class="form-control" id="riwayat_penggunaan_obat" name="riwayat_penggunaan_obat" rows="2"></textarea>
+      </div>
+
+      <div class="mb-3 text-start">
+        <label for="riwayat_penyakit_dahulu" class="form-label">Riwayat Penyakit Dahulu</label>
+        <textarea class="form-control" id="riwayat_penyakit_dahulu" name="riwayat_penyakit_dahulu" rows="2"></textarea>
+      </div>
+
+      <button type="submit" class="btn btn-primary w-100">Kirim</button>
+    </form>
+
+    <div id="message" class="alert mt-3" role="alert"></div>
+
+    <br>
+    <br>
+
+    <div>
+      <p>&copy; Triase IGD RSUD KL<br>Created by M Yudhi Akbar</p>
     </div>
-    <div class="mb-3">
-      <label for="body" class="form-label">Saran</label>
-      <input type="text" class="form-control" id="body" required>
-    </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
+  </div>
 
-	<!-- Input type text -->
-	<div class="form-group">
-		<label for="nama">Nama Pasien</label>
-		<input type="text" class="form-control" name="nama" id="nama" required>
-		<label for="keluhan">Keluhan</label>
-		<textarea type="text" class="form-control" name="keluhan" id="keluhan" required></textarea>
-	</div>
+  <script>
+    // === Typing Effect ===
+    const text = "Form Triase RSUD KL";
+    let index = 0;
+    const typingTextElement = document.getElementById("typingText");
 
-	<!-- Input text grid -->
-	<div class="form-group">
-		<div class="row">
-			<div class="col">
-				<label>Tekanan Darah</label>
-				<input type="text" name="tekanan-darah" id="tekanan-darah" class="form-control">
-			</div>
-			<div class="col">
-				<label>Nadi</label>
-				<input type="number" name="nadi" id="nadi" class="form-control" required>
-			</div>
-		</div>
-	</div>
+    function typeEffect() {
+      if (index < text.length) {
+        typingTextElement.textContent += text.charAt(index);
+        index++;
+        setTimeout(typeEffect, 120); // kecepatan mengetik
+      }
+    }
+    typeEffect();
 
-	<!-- Input text grid -->
-	<div class="form-group">
-		<div class="row">
-			<div class="col">
-				<label>Suhu</label>
-				<input type="text" name="suhu" id="suhu" class="form-control" required>
-			</div>
-			<div class="col">
-				<label>Pernapasan</label>
-				<input type="number" name="pernapasan" id="pernapasan" class="form-control" required>
-			</div>
-		</div>
-	</div>
+    // === Form Submit Handling ===
+    const form = document.getElementById("dataIGD");
+    const messageBox = document.getElementById("message");
 
+    form.addEventListener("submit", function(event) {
+      event.preventDefault();
 
-	<!-- Input text grid -->
-	<div class="form-group">
-		<div class="row">
-			<div class="col">
-				<label>Saturasi O2</label>
-        <input type="text" name="saturasi" id="saturasi" class="form-control" required>
-			</div>
-		</div>
-	</div>
-			</form>
-  </form>
+      const scriptURL = "https://script.google.com/macros/s/AKfycbyGKK7t7-mwGacxlOJtkLz0pTDNgqueFfI2X69YFjsarf-87BPzxWU7hSBjsNozKcO4ig/exec";
+      const formData = new FormData(form);
+
+      // Pesan loading sementara
+      showMessage("⏳ Mengirim data...", "secondary");
+
+      fetch(scriptURL, { method: "POST", body: formData })
+        .then(response => {
+          if (response.ok) {
+            showMessage("✔️ Data berhasil disimpan!", "success");
+            form.reset();
+          } else {
+            throw new Error("Gagal menyimpan data");
+          }
+        })
+        .catch(error => {
+          showMessage("❗ Terjadi kesalahan: " + error.message, "danger");
+        });
+    });
+
+    function showMessage(text, type) {
+      messageBox.textContent = text;
+      messageBox.className = "alert alert-" + type + " mt-3";
+      messageBox.style.display = "block";
+    }
+  </script>
 </body>
 </html>

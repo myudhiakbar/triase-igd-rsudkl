@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -94,8 +94,8 @@
       </div>
 
       <div class="mb-3 text-start">
-        <label for="catatan" class="form-label">Catatan Pasien</label>
-        <textarea class="form-control" id="catatan" name="catatan" rows="10" required></textarea>
+        <label for="catatan" class="form-label">Catatan <span class="text-danger">*</span></label>
+        <textarea class="form-control" id="catatan" name="catatan" rows="10" placeholder="Isi dengan Keluhan, RPD, RPO, TTV pasien" required></textarea>
       </div>
 
       <!-- <div class="mb-3 text-start">
@@ -146,11 +146,11 @@
       <div class="mb-3 text-start">
         <label for="riwayat_penyakit_dahulu" class="form-label">Riwayat Penyakit Dahulu</label>
         <textarea class="form-control" id="riwayat_penyakit_dahulu" name="riwayat_penyakit_dahulu" rows="2"></textarea>
-      </div>
+      </div> -->
 
       <div class="mb-3 text-start">
         <p><span class="text-danger">* wajib diisi ya gaess</span></p>
-      </div> -->
+      </div>
 
       <button type="submit" class="btn btn-primary w-100">Simpan Data</button>
     </form>
@@ -161,7 +161,10 @@
 
     <div class="mb-3 text-start">
       <p>Lihat Hasil Data :</p>
-      <a href="https://docs.google.com/spreadsheets/d/1eGE5nLd_5q7C5K9EOwTAFmBDEASX9w4D7dQVCH7uPeI/" class="btn btn-secondary w-100" target="_blank">Buka File Data Pasien</a>    
+      <!-- <div class="mb-3 text-start">
+      <a href="https://docs.google.com/spreadsheets/d/1eGE5nLd_5q7C5K9EOwTAFmBDEASX9w4D7dQVCH7uPeI/" class="btn btn-secondary w-100" target="_blank">Buka via Google Sheet</a></div> -->
+      <div class="mb-3 text-start">
+      <a href="https://docs.google.com/spreadsheets/d/1eGE5nLd_5q7C5K9EOwTAFmBDEASX9w4D7dQVCH7uPeI/" class="btn btn-secondary w-100" target="_blank">Buka via Google Sheet</a></div>
     </div>
     <br>
 
@@ -171,18 +174,52 @@
   </div>
 
   <script>
-    // === Typing Effect ===
-    const text = "Note Triase IGD RSKL";
+    // // === Typing Effect ===
+    // const text = "NOTE TRIASE IGD RSKL";
+    // let index = 0;
+    // const typingTextElement = document.getElementById("typingText");
+
+    // function typeEffect() {
+    //   if (index < text.length) {
+    //     typingTextElement.textContent += text.charAt(index);
+    //     index++;
+    //     setTimeout(typeEffect, 120); // kecepatan mengetik
+    //   }
+    // }
+    // typeEffect();
+
+    // === Typing Effect Unlimited ===
+    const text = "NOTE TRIASE IGD RSKL";
     let index = 0;
+    let deleting = false;
     const typingTextElement = document.getElementById("typingText");
 
     function typeEffect() {
-      if (index < text.length) {
-        typingTextElement.textContent += text.charAt(index);
+      if (!deleting && index <= text.length) {
+        // Mengetik huruf
+        typingTextElement.textContent = text.substring(0, index);
         index++;
-        setTimeout(typeEffect, 120); // kecepatan mengetik
+      } else if (deleting && index >= 0) {
+        // Menghapus huruf
+        typingTextElement.textContent = text.substring(0, index);
+        index--;
       }
+
+    // Ganti status setelah selesai ketik atau hapus
+    if (index > text.length) {
+      deleting = true;
+      setTimeout(typeEffect, 1000); // jeda sebelum menghapus
+      return;
+    } else if (index < 0) {
+      deleting = false;
+      index = 0;
     }
+
+    // Kecepatan ketik/hapus
+    const speed = deleting ? 80 : 120;
+    setTimeout(typeEffect, speed);
+    }
+
     typeEffect();
 
     // === Time Update ===
@@ -211,24 +248,24 @@
     form.addEventListener("submit", function(event) {
       event.preventDefault();
 
-      const scriptURL = "https://script.google.com/macros/s/AKfycbyGKK7t7-mwGacxlOJtkLz0pTDNgqueFfI2X69YFjsarf-87BPzxWU7hSBjsNozKcO4ig/exec";
-      const formData = new FormData(form);
+    const scriptURL = "https://script.google.com/macros/s/AKfycbyGKK7t7-mwGacxlOJtkLz0pTDNgqueFfI2X69YFjsarf-87BPzxWU7hSBjsNozKcO4ig/exec";
+    const formData = new FormData(form);
 
-      // Pesan loading sementara
-      showMessage("⏳ Mengirim data...", "secondary");
+    // Pesan loading sementara
+    showMessage("⏳ Mengirim data...", "secondary");
 
-      fetch(scriptURL, { method: "POST", body: formData })
-        .then(response => {
-          if (response.ok) {
-            showMessage("✔️ Data berhasil disimpan!", "success");
-            form.reset();
-          } else {
-            throw new Error("Gagal menyimpan data");
-          }
-        })
-        .catch(error => {
-          showMessage("❗ Terjadi kesalahan: " + error.message, "danger");
-        });
+    fetch(scriptURL, { method: "POST", body: formData })
+      .then(response => {
+        if (response.ok) {
+          showMessage("✔️ Data berhasil disimpan!", "success");
+          form.reset();
+        } else {
+          throw new Error("Gagal menyimpan data");
+        }
+      })
+      .catch(error => {
+        showMessage("❗ Terjadi kesalahan: " + error.message, "danger");
+      });
     });
 
     function showMessage(text, type) {
